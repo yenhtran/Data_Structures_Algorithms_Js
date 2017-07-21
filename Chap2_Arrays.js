@@ -446,7 +446,116 @@ Array.matrix = function(numrows, numcols, initial) {
 
 var nums = Array.matrix(5,5,0);
 console.log(nums[1][1]);
+var names = Array.matrix(3,3,"");
+names[1][2] = 'Joe';
+console.log(names);
 
- 
+	/* Processing Two-Dimensional Array Elements */
 
+		/* For columnar processing: */
+
+var grades = [[89,77,78],[76,82,81],[91,94,89]];
+var total = 0;
+var average = 0.0;
+
+for (var row = 0; row < grades.length; ++row) {
+	for (var col = 0; col < grades[row].length; ++col) {
+		total += grades[row][col];
+	}
+	average = total / grades[row].length;
+	console.log('Student ' + parseInt(row + 1) + ' average: ' + average.toFixed(2));
+	total = 0;
+	average = 0.0;
+}
+	
+		/* toFixed(n): (for Integers) rounds integers to two decimals */
+
+		/* To perform a row-wise computation */
+
+for (var col = 0; col < grades.length; ++col) {
+	for (var row = 0; row < grades[col].length; ++row) {
+		total += grades[row][0];
+	}
+	average = total / grades.length;
+	console.log('Students ' + parseInt(row + 1) + ' average: ' + average.toFixed(2));
+	total = 0;
+	average = 0.0;
+}
+
+	/* Jagged Array */
+
+var grades = [[89,77],[76,82,81],[91,94,89,99]];
+var total = 0;
+var average = 0.0;
+
+for (var row = 0; row < grades.length; ++row) {
+	for (var col = 0; col < grades[row].length; ++col) {
+		total += grades[row][col];
+	}
+	average = total / grades[row].length;
+	console.log('Students ' + parseInt(row + 1) + ' average: ' + average.toFixed(2));
+	total = 0;
+	average = 0.0;
+}
+
+	/* Array of Objects */
+
+function displayPts(arr) {
+	for (var i = 0; i < arr.length; ++i) {
+		console.log(arr[i].x + ', ' + arr[i].y);
+	}
+}
+
+function Point(x,y) {
+	this.x = x;
+	this.y = y;
+}
+
+var p1 = new Point(1,2);
+var p2 = new Point(3,5);
+var p3 = new Point(2,8);
+var p4 = new Point(4,4);
+var points = [p1,p2,p3,p4];
+for (var i = 0; i < points.length; ++i) {
+	console.log('Point ' + parseInt(i + 1) + ': ' + points[i].x + ',' + points[i].y);
+}
+var p5 = new Point(12,-3);
+points.push(p5);
+console.log('After push:');
+displayPts(points);
+points.shift();
+console.log('After shift:');
+displayPts(points);
+
+	/* Arrays in Objects */
+
+function weekTemps() {
+	this.dataStore = [];
+	this.add = addTemps;
+	this.average = averageTemps;
+}
+
+function addTemps(temp) {
+	this.dataStore.push(temp);
+}
+
+function averageTemps() {
+	var total = 0;
+	for (var i = 0; i < this.dataStore.length; ++i) {
+		total += this.dataStore[i];
+	}
+	return total / this.dataStore.length;
+}
+
+var thisWeek = new weekTemps();
+thisWeek.add(52);
+thisWeek.add(55);
+thisWeek.add(61);
+thisWeek.add(65);
+thisWeek.add(55);
+thisWeek.add(50);
+thisWeek.add(52);
+thisWeek.add(49);
+
+console.log(thisWeek.average());
 
