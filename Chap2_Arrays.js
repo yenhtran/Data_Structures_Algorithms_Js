@@ -1,18 +1,37 @@
 /*
 ARRAYS
-	-indexOf()
-	-lastIndexOf()
-	-join()
-	-toString()
-	-concat()
-	-splice()
-	-push()
-	-unshift()
-	-pop()
-	-shift()
-	-splice()
+	-ACCESSOR FUNCTIONS:
+		-Searching for a Value
+			-indexOf()
+			-lastIndexOf()
+		-String Representations of Arrays:
+			-join()
+			-toString()
+		-Creating New Arrays from Existing Arrays:
+			-concat()
+			-splice()
+	-MUTATOR FUNCTIONS:
+		-Adding Elements to an Array
+			-push()
+			-unshift()
+		-Removing Elements from an Array
+			-pop()
+			-shift()
+		-Adding and Removing Elements from the Middle of an Array
+			-splice()
+		-Putting Array Elements in Order
+			-reverse()
+			-sort()
+	-ITERATOR FUNCTIONS:
+		-Non-Array-Generating Iterator functions
+			-forEach()
+			-every()
+			-some()
+			-reduce()
+			-reduceRight()
+			-map()
+			-filter()
 */
-
 
 /* CREATING ARRAYS */
 
@@ -62,7 +81,7 @@ for (var i = 0; i < words.length; ++i) {
 
 var nums = [];
 for (var i = 0; i < 10; ++i) {
-	nums[i] = i+1;
+	nums[i] = i + 1;
 }
 var samenums = nums;
 
@@ -207,7 +226,7 @@ console.log(nums);
 		/* splice(): changes the contents of an array by removing existing elements and/or adding new elements 
 				-To add elements, you need to provide args:
 						-Starting index (where you want to begin adding elements)
-						-The number of elements to remove(0 when you are addign elements)
+						-The number of elements to remove(0 when you are adding elements)
 						-The elements you want to add to the array
 				-To remove elements, you need to provide args:
 						-Starting index
@@ -220,6 +239,214 @@ console.log(nums);
 
 var nums = [1,2,3,100,200,300,400,4,5];
 nums.splice(3,4);
-console.log('CURRENT', nums)
+console.log(nums)
+
+	/* Putting Array Elements in Order */
+
+		/* reverse():reverses the order of the elements of an array */
+
+var nums = [1,2,3,4,5];
+nums.reverse();
+console.log(nums);
+
+		/* sort(): sort the elements of an array into alphabetical order
+			-In order to sort numbers, we will need to pass in an ordering function as the first argument to the function, which sort() will then use to sort the array elements. This is the function that sort() will use when comparing pairs of array elements to determine their correct order.
+
+		*/
+
+var names = ["David","Mike","Cynthia","Clayton","Bryan","Raymond"];
+names.sort();
+console.log(names);
+
+		/*
+			For numbers, the ordering function can simply subtract one number from another number. If the number returned is negative, the left operand is less than the right operand; if the number returned is zero, the left operand is equal to the right operand; and if the number returned is positive, the left operand is greater than the right operand.
+		*/
+
+function compare(num1, num2) {
+	return num1 - num2;
+}
+
+var nums = [3,1,2,100,4,200];
+nums.sort(compare);
+console.log(nums);
+
+/* ===> ITERATOR FUNCTIONS: These functions apply a function to each element of an array, either returning a value, a set of values, or a new array after applying the function to each element of an array */
+
+	/* Non-Array-Generating Iterator Functions: */
+
+		/* forEach(): This function takes a function as an argument and applies the called function to each element of an array. */
+
+function square(num) {
+	console.log(num, num * num);
+}
+
+var nums = [1,2,3,4,5,6,7,8,9,10];
+nums.forEach(square);
+
+		/* every(): applies a Boolean function to an array and returns true if the function can return true for every element in the array.*/
+
+function isEven(num) {
+	return num % 2 == 0;
+}
+
+var nums = [2,4,6,8,10];
+var even = nums.every(isEven);
+if (even) {
+	console.log('all numbers are even');
+} else {
+	console.log('not all numbers are even');
+}
+
+		/* some(): will take a Boolean function and return true if at least one of the elements in the array meets the criterion of the Boolean function */
+
+function isEven(num) {
+	return num % 2 == 0;
+}
+
+var nums = [1,2,3,4,5,6,7,8,9,10];
+var someEven = nums.some(isEven);
+if (someEven) {
+	console.log('some numbers are even');
+} else {
+	console.log('no numbers are even');
+}
+
+nums = [1,3,5,7,9];
+someEven = nums.some(isEven);
+if (someEven) {
+	console.log("some numbers are even");
+} else {
+	console.log("no numbers are even");
+}
+
+		/* reduce(): applies a function to an accumulator and the successive elements of an array until the end of the array is reached, yielding a single value. */
+
+function add(runningTotal, currentValue) {
+	return runningTotal + currentValue;
+}
+
+var nums = [1,2,3,4,5,6,7,8,9,10];
+var sum = nums.reduce(add);
+console.log(sum);
+
+		/*
+			add(1,2) -> 3
+			add(3,3) -> 6
+			add(6,4) -> 10
+			add(10,5) -> 15
+			add(15,6) -> 21
+			add(21,7) -> 28
+			add(28,8) -> 36
+			add(36,9) -> 45
+			add(45,10) -> 55
+		*/
+
+function concat(accumulatedString, item) {
+	return accumulatedString + item;
+}
+
+var words = ['the ', 'quick ', 'brown ', 'fox '];
+var sentence = words.reduce(concat);
+console.log(sentence); //the quick brown fox
+
+		/* reduceRight(): method applies a function against an accumulator and each value of the array (from right-to-left) to reduce it to a single value. */
+
+function concat(accumulatedString, item) {
+	return accumulatedString + item;
+}
+
+var words = ['the ', 'quick ', 'brown ', 'fox '];
+var sentence = words.reduceRight(concat);
+console.log(sentence); //fox brown quick the
+
+	/* Iterator Functions That Return a New Array: */
+
+		/* map(): The map() function works like the forEach() function, applying a function to each element of an array. The difference between the two functions is that map() returns a new array with the results of the function application.*/
+
+function curve(grade){
+	return grade += 5;
+}
+
+var grades = [77,65,81,92,83];
+var newgrades = grades.map(curve);
+console.log(newgrades);
+
+function firstA(word){
+	return word[0];
+}
+
+var words = ['for','your','information'];
+var acronym = words.map(firstA);
+console.log(acronym.join(''));
+
+		/* filter(): The filter() function works similarly to every(), but instead of returning true if all the elements of an array satisfy a Boolean function, the function returns a new array consisting of those elements that satisfy the Boolean function.*/
+
+function isEven(num) {
+	return num % 2 == 0;
+}
+
+function isOdd(num) {
+	return num % 2 != 0;
+}
+
+var nums = [];
+for (var i = 0; i < 20; ++i) {
+	nums[i] = i + 1;
+}
+
+var evens = nums.filter(isEven);
+console.log('Even numbers: ', evens);
+var odds = nums.filter(isOdd);
+console.log('Odd numbers: ', odds);
+
+//=================
+
+function passing(num){
+	return num >= 60;
+}
+
+var grades = [];
+for (var i = 0; i < 20; ++i) {
+	grades[i] = Math.floor(Math.random() * 101);
+}
+
+var passingGrades = grades.filter(passing);
+console.log('All grades: ', grades);
+console.log('Passing grades: ', passingGrades);
+
+//===================
+
+function afterC(word){
+	if (word.indexOf('cie') > -1) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+var words = ["recieve","deceive","percieve","deceit","concieve"];
+var misspelled = words.filter(afterC);
+console.log(misspelled);
+
+/* ===> TWO-DIMENSIONAL AND MULTIDIMENSIONAL ARRAYS: JavaScript arrays are only one-dimensional, but you can create multidimensional arrays by creating arrays of arrays. */
+
+	/* Creating Two-Dimensional Arrays */
+
+Array.matrix = function(numrows, numcols, initial) {
+	var arr = [];
+	for (var i = 0; i < numrows; ++i) {
+		var columns = [];
+		for (var j = 0; j < numcols; ++j) {
+			columns[j] = initial;
+		}
+		arr[i] = columns;
+	}
+	return arr;
+}
+
+var nums = Array.matrix(5,5,0);
+console.log(nums[1][1]);
+
+ 
 
 
